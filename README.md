@@ -5,8 +5,8 @@ This frontend portfolio is designed for internship and entry-level developer opp
 ## Run the site
 
 ```powershell
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 Open the local URL printed by Vite. It is usually `http://localhost:5173/`.
@@ -14,8 +14,8 @@ Open the local URL printed by Vite. It is usually `http://localhost:5173/`.
 ## Check a change
 
 ```powershell
-pnpm lint
-pnpm build
+npm run lint
+npm run build
 ```
 
 ## Where to edit content
