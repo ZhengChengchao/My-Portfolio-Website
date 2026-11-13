@@ -1,29 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import monogramUrl from '../portfolio_logo.png'
-
-const portfolioCategories = [
-  {
-    id: 'development',
-    label: 'Development',
-    number: '01',
-    title: '[Development project title to add]',
-    summary: '[Add the problem, your role, the tools used and the outcome.]',
-  },
-  {
-    id: 'design-ux',
-    label: 'Design & UX',
-    number: '02',
-    title: '[Design or UX project title to add]',
-    summary: '[Add the design challenge, process, deliverables and outcome.]',
-  },
-  {
-    id: 'ai-data-automation',
-    label: 'AI, Data & Automation',
-    number: '03',
-    title: '[AI, data or automation project title to add]',
-    summary: '[Add the task, your approach, the tools used and the outcome.]',
-  },
-]
+import ProjectCard from './components/ProjectCard.jsx'
+import ProjectDetail from './components/ProjectDetail.jsx'
+import { projectCategories, projects } from './data/projects.js'
 
 const focusAreas = [
   {
@@ -59,7 +38,7 @@ function ArrowIcon() {
   )
 }
 
-function Header() {
+function Header({ onNavigate, detailView }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [portfolioOpen, setPortfolioOpen] = useState(false)
   const menuButtonRef = useRef(null)
@@ -97,10 +76,16 @@ function Header() {
     setPortfolioOpen(false)
   }
 
+  const handleNavigation = (event, sectionId) => {
+    event.preventDefault()
+    closeNavigation()
+    onNavigate(sectionId)
+  }
+
   return (
     <header className="site-header">
       <div className="site-header__inner shell">
-        <a className="brand" href="#home" onClick={closeNavigation}>
+        <a className="brand" href="#home" onClick={(event) => handleNavigation(event, 'home')}>
           <Monogram compact />
           <span className="brand__name">Zheng Chengchao</span>
         </a>
@@ -126,15 +111,20 @@ function Header() {
           id="primary-navigation"
           aria-label="Primary navigation"
         >
-          <a className="primary-nav__link is-current" href="#home" aria-current="page" onClick={closeNavigation}>
+          <a
+            className={`primary-nav__link ${detailView ? '' : 'is-current'}`}
+            href="#home"
+            aria-current={detailView ? undefined : 'page'}
+            onClick={(event) => handleNavigation(event, 'home')}
+          >
             Home
           </a>
-          <a className="primary-nav__link" href="#about" onClick={closeNavigation}>
+          <a className="primary-nav__link" href="#about" onClick={(event) => handleNavigation(event, 'about')}>
             About
           </a>
           <div className={`portfolio-menu ${portfolioOpen ? 'is-open' : ''}`}>
             <button
-              className="primary-nav__link portfolio-menu__trigger"
+              className={`primary-nav__link portfolio-menu__trigger ${detailView ? 'is-current' : ''}`}
               type="button"
               aria-haspopup="true"
               aria-expanded={portfolioOpen}
@@ -145,15 +135,23 @@ function Header() {
             </button>
             <div className="portfolio-menu__panel">
               <p>Browse by category</p>
-              {portfolioCategories.map((category) => (
-                <a key={category.id} href={`#${category.id}`} onClick={closeNavigation}>
+              {projectCategories.map((category) => (
+                <a
+                  key={category.id}
+                  href={`#${category.id}`}
+                  onClick={(event) => handleNavigation(event, category.id)}
+                >
                   <span>{category.number}</span>
                   {category.label}
                 </a>
               ))}
             </div>
           </div>
-          <a className="button button--small" href="#contact" onClick={closeNavigation}>
+          <a
+            className="button button--small"
+            href="#contact"
+            onClick={(event) => handleNavigation(event, 'contact')}
+          >
             Contact
             <ArrowIcon />
           </a>
@@ -231,7 +229,7 @@ function SectionHeading({ id, eyebrow, label, title, description }) {
   )
 }
 
-function Portfolio() {
+function Portfolio({ onOpenProject }) {
   return (
     <section className="section section--surface" id="portfolio" aria-labelledby="portfolio-title">
       <div className="shell">
@@ -243,25 +241,12 @@ function Portfolio() {
           description="Project details are still being prepared. Each case study will show the problem, process, contribution and result."
         />
         <div className="project-grid">
-          {portfolioCategories.map((project) => (
-            <article className="project-card" id={project.id} key={project.id}>
-              <div className="project-card__media">
-                <span>Project image placeholder</span>
-                <strong aria-hidden="true">{project.number}</strong>
-              </div>
-              <div className="project-card__body">
-                <p className="project-card__category">{project.label}</p>
-                <h3>{project.title}</h3>
-                <p>{project.summary}</p>
-                <div className="project-card__footer">
-                  <span>[Tools to add]</span>
-                  <button type="button" disabled>
-                    Case study to add
-                    <ArrowIcon />
-                  </button>
-                </div>
-              </div>
-            </article>
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              onOpen={onOpenProject}
+            />
           ))}
         </div>
       </div>
@@ -329,7 +314,12 @@ function About() {
   )
 }
 
-function Footer() {
+function Footer({ onNavigate }) {
+  const handleNavigation = (event, sectionId) => {
+    event.preventDefault()
+    onNavigate(sectionId)
+  }
+
   return (
     <footer className="site-footer" id="contact">
       <div className="shell site-footer__top">
@@ -359,14 +349,14 @@ function Footer() {
       </div>
 
       <div className="shell site-footer__bottom">
-        <a className="brand brand--footer" href="#home">
+        <a className="brand brand--footer" href="#home" onClick={(event) => handleNavigation(event, 'home')}>
           <Monogram compact />
           <span className="brand__name">Zheng Chengchao</span>
         </a>
         <nav aria-label="Footer navigation">
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#portfolio">Portfolio</a>
+          <a href="#home" onClick={(event) => handleNavigation(event, 'home')}>Home</a>
+          <a href="#about" onClick={(event) => handleNavigation(event, 'about')}>About</a>
+          <a href="#portfolio" onClick={(event) => handleNavigation(event, 'portfolio')}>Portfolio</a>
         </nav>
         <p>© {new Date().getFullYear()} ZC Portfolio</p>
       </div>
@@ -375,17 +365,53 @@ function Footer() {
 }
 
 function App() {
+  const [selectedProjectId, setSelectedProjectId] = useState(null)
+  const selectedProject = projects.find((project) => project.id === selectedProjectId)
+
+  const scrollToSection = (sectionId) => {
+    setSelectedProjectId(null)
+
+    requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    })
+  }
+
+  const openProject = (projectId) => {
+    setSelectedProjectId(projectId)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const closeProject = () => {
+    setSelectedProjectId(null)
+
+    requestAnimationFrame(() => {
+      document.getElementById('portfolio')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    })
+  }
+
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
-      <Header />
+      <Header onNavigate={scrollToSection} detailView={Boolean(selectedProject)} />
       <main id="main-content">
-        <Hero />
-        <Portfolio />
-        <Skills />
-        <About />
+        {selectedProject ? (
+          <ProjectDetail project={selectedProject} onBack={closeProject} />
+        ) : (
+          <>
+            <Hero />
+            <Portfolio onOpenProject={openProject} />
+            <Skills />
+            <About />
+          </>
+        )}
       </main>
-      <Footer />
+      <Footer onNavigate={scrollToSection} />
     </>
   )
 }
