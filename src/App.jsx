@@ -238,7 +238,7 @@ function Portfolio({ onOpenProject }) {
           eyebrow="02"
           label="Selected overview"
           title="Featured work"
-          description="Project details are still being prepared. Each case study will show the problem, process, contribution and result."
+          description="Explore my academic projects, their development processes, technical challenges and my individual contributions."
         />
         <div className="project-grid">
           {projects.map((project) => (

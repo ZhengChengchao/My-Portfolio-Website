@@ -9,15 +9,28 @@ function ProjectCard({ project, onOpen }) {
     ? project.summary.value
     : `[${project.summary.label} pending — update src/data/projects.js]`
 
+  const hasThumbnail = isFieldReady(project.thumbnail)
+
   const technologies = isFieldReady(project.detail.technologies)
     ? project.detail.technologies.value.join(', ')
     : '[Technologies pending]'
 
   return (
     <article className="project-card" id={project.id}>
-      <div className="project-card__media">
-        <span>{project.thumbnail.label} pending</span>
-        <strong aria-hidden="true">{project.number}</strong>
+      <div className={`project-card__media ${hasThumbnail ? 'has-image' : ''}`}>
+        {hasThumbnail ? (
+          <img
+            className="project-card__thumbnail"
+            src={project.thumbnail.value}
+            alt={`${title} project preview`}
+            loading="lazy"
+          />
+        ) : (
+          <>
+            <span>{project.thumbnail.label} pending</span>
+            <strong aria-hidden="true">{project.number}</strong>
+          </>
+        )}
       </div>
       <div className="project-card__body">
         <div className="project-card__meta">

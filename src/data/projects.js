@@ -133,9 +133,9 @@ const campusCycleProject = {
     'A second-hand marketplace for Republic Polytechnic students to buy, sell and exchange course-related items.',
   ),
 
-  thumbnail: pendingField(
+  thumbnail: readyField(
     'Project thumbnail',
-    'Add an actual screenshot of CampusCycle.',
+    '/images/projects/campuscycle/campuscycle-overview.webp',
     'media',
   ),
 
@@ -253,37 +253,38 @@ const campusCycleProject = {
         {
           src: '/images/projects/campuscycle/campuscycle-reservation-requested.webp',
           alt: 'Buyer reservation request details',
-          caption: 'Reservation Requested — A new reservation is created with the Requested status.',
+          caption:
+            'Reservation Requested — A new reservation is created with the Requested status.',
         },
         {
           src: '/images/projects/campuscycle/campuscycle-meetup-proposal-form.webp',
           alt: 'Seller meetup proposal form',
-          caption: 'Meetup Arrangement — The seller selects a date, time and campus location.',
+          caption:
+            'Meetup Arrangement — The seller selects a date, time and campus location.',
         },
         {
           src: '/images/projects/campuscycle/campuscycle-meetup-proposed.webp',
           alt: 'Reservation after seller meetup proposal',
-          caption: 'Meetup Proposed — The buyer can now review the proposed meeting details.',
+          caption:
+            'Meetup Proposed — The seller has sent the meeting details to the buyer.',
         },
         {
           src: '/images/projects/campuscycle/campuscycle-buyer-confirmation.webp',
           alt: 'Buyer confirmation of meetup',
-          caption: 'Buyer Confirmation — The buyer can accept the proposed meetup.',
+          caption:
+            'Buyer Confirmation — The buyer reviews and accepts the proposed meetup.',
         },
         {
           src: '/images/projects/campuscycle/campuscycle-transaction-completed.webp',
           alt: 'Completed CampusCycle transaction',
-          caption: 'Transaction Completed — The seller marks the exchange as completed.',
+          caption:
+            'Transaction Completed — The seller marks the exchange as completed.',
         },
         {
           src: '/images/projects/campuscycle/campuscycle-reservation-statuses.webp',
-          alt: 'Reservation status list',
-          caption: 'Reservation Management — Different reservation states are displayed in one list.',
-        },
-        {
-          src: '/images/projects/campuscycle/campuscycle-overview.webp',
-          alt: 'CampusCycle marketplace home page',
-          caption: 'CampusCycle Marketplace — The application allows students to browse and reserve second-hand items.',
+          alt: 'CampusCycle reservation status list',
+          caption:
+            'Reservation Management — Different reservation statuses are displayed in one list.',
         },
       ],
       'gallery',

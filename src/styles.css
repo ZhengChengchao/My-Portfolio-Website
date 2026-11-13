@@ -628,6 +628,24 @@ svg {
   transform: translate(-50%, -50%) rotate(-31deg);
 }
 
+/* Real project thumbnails: keep the complete screenshot visible. */
+.project-card__media.has-image {
+  background: var(--card);
+}
+
+.project-card__media.has-image::before,
+.project-card__media.has-image::after {
+  display: none;
+}
+
+.project-card__thumbnail {
+  display: block;
+  width: 100%;
+  height: 245px;
+  object-fit: contain;
+  background: var(--card);
+}
+
 .project-card__media span {
   z-index: 2;
   padding: 8px 11px;
@@ -814,30 +832,53 @@ svg {
   content: '';
 }
 
-.project-detail__hero-media {
-  position: relative;
-  display: grid;
-  min-height: 390px;
-  overflow: hidden;
-  place-items: center;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background:
-    radial-gradient(circle at 75% 22%, rgba(245, 166, 35, 0.16), transparent 28%),
-    repeating-linear-gradient(135deg, transparent 0 22px, rgba(247, 247, 247, 0.025) 22px 23px),
-    var(--surface);
+/* =========================================
+   PROJECT DETAIL — HERO IMAGE
+   ========================================= */
+
+/* Remove placeholder decorations when an
+   actual project thumbnail is available. */
+
+.project-detail__hero-media.has-image {
+  background: var(--card);
+  padding: 20px;
 }
 
-.project-detail__hero-media::before,
-.project-detail__hero-media::after {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 115%;
-  height: 1px;
-  background: rgba(247, 247, 247, 0.08);
-  content: '';
+.project-detail__hero-media.has-image::before,
+.project-detail__hero-media.has-image::after {
+  display: none;
 }
+
+/* Show the complete project screenshot
+   without cropping its contents. */
+
+.project-detail__hero-image {
+  display: block;
+  position: relative;
+  z-index: 1;
+
+  width: 100%;
+  height: auto;
+  max-height: 520px;
+
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 640px) {
+  .project-detail__hero-media.has-image {
+    min-height: auto;
+    padding: 10px;
+  }
+
+  .project-detail__hero-image {
+    max-height: none;
+    border-radius: 5px;
+  }
+}
+/* --- */
 
 .project-detail__hero-media::before {
   transform: translate(-50%, -50%) rotate(17deg);
@@ -1079,8 +1120,8 @@ svg {
 
 .outcome-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
 }
 
 .outcome-card {
@@ -1094,11 +1135,14 @@ svg {
 .outcome-card img,
 .outcome-card__placeholder {
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
 }
 
 .outcome-card img {
-  object-fit: cover;
+  display: block;
+  height: auto;
+  object-fit: contain;
+  background: #202020;
 }
 
 .outcome-card__placeholder {
@@ -1545,6 +1589,11 @@ svg {
 
   .challenge-list {
     grid-template-columns: 1fr;
+  }
+
+  .outcome-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
   }
 
   .about__aside > p:last-child {
