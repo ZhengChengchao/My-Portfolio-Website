@@ -247,28 +247,48 @@ const campusCycleProject = {
 
     // 05. SCREENSHOTS AND FINAL OUTCOME
 
-    screenshotsAndOutcome: pendingField(
+    screenshotsAndOutcome: readyField(
       'Screenshots and final outcome',
-      'Add real CampusCycle screenshots showing reservation features and the final application.',
-      'gallery',
       [
         {
-          src: null,
-          alt: null,
-          caption: 'Reservation list screenshot to add',
+          src: '/images/projects/campuscycle/campuscycle-reservation-requested.webp',
+          alt: 'Buyer reservation request details',
+          caption: 'Reservation Requested — A new reservation is created with the Requested status.',
         },
         {
-          src: null,
-          alt: null,
-          caption: 'Meetup proposal screenshot to add',
+          src: '/images/projects/campuscycle/campuscycle-meetup-proposal-form.webp',
+          alt: 'Seller meetup proposal form',
+          caption: 'Meetup Arrangement — The seller selects a date, time and campus location.',
         },
         {
-          src: null,
-          alt: null,
-          caption: 'Completed transaction screenshot to add',
+          src: '/images/projects/campuscycle/campuscycle-meetup-proposed.webp',
+          alt: 'Reservation after seller meetup proposal',
+          caption: 'Meetup Proposed — The buyer can now review the proposed meeting details.',
+        },
+        {
+          src: '/images/projects/campuscycle/campuscycle-buyer-confirmation.webp',
+          alt: 'Buyer confirmation of meetup',
+          caption: 'Buyer Confirmation — The buyer can accept the proposed meetup.',
+        },
+        {
+          src: '/images/projects/campuscycle/campuscycle-transaction-completed.webp',
+          alt: 'Completed CampusCycle transaction',
+          caption: 'Transaction Completed — The seller marks the exchange as completed.',
+        },
+        {
+          src: '/images/projects/campuscycle/campuscycle-reservation-statuses.webp',
+          alt: 'Reservation status list',
+          caption: 'Reservation Management — Different reservation states are displayed in one list.',
+        },
+        {
+          src: '/images/projects/campuscycle/campuscycle-overview.webp',
+          alt: 'CampusCycle marketplace home page',
+          caption: 'CampusCycle Marketplace — The application allows students to browse and reserve second-hand items.',
         },
       ],
+      'gallery',
     ),
+
 
     // 06. PROJECT LINKS
 
