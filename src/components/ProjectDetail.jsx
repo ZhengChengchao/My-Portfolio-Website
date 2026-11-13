@@ -1,5 +1,7 @@
 
+import { useRef, useState } from 'react'
 import { isFieldReady } from '../data/projects.js'
+import Lightbox from './Lightbox.jsx'
 
 function PendingContent({ field, compact = false }) {
   return (
@@ -117,6 +119,23 @@ function ChallengesField({ field }) {
 
 function OutcomeField({ field }) {
   const items = field.value ?? []
+  const images = items.filter((item) => typeof item?.src === 'string' && item.src.trim())
+  const [selectedIndex, setSelectedIndex] = useState(null)
+  const openerRef = useRef(null)
+
+  const openLightbox = (event, item) => {
+    // Preserve normal link behaviour for Ctrl/Cmd-click and opening a new tab.
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
+    event.preventDefault()
+    openerRef.current = event.currentTarget
+    openerRef.current.focus()
+    setSelectedIndex(images.indexOf(item))
+  }
+
+  const closeLightbox = () => {
+    setSelectedIndex(null)
+    openerRef.current?.focus()
+  }
 
   return (
     <>
@@ -130,12 +149,20 @@ function OutcomeField({ field }) {
             className="outcome-card"
             key={`${field.label}-${index + 1}`}
           >
-            {item.src ? (
-              <img
-                src={item.src}
-                alt={item.alt ?? ''}
-                loading="lazy"
-              />
+            {images.includes(item) ? (
+              <a
+                className="outcome-card__image-link"
+                href={item.src}
+                aria-label={`Enlarge screenshot ${index + 1}: ${item.alt ?? item.caption ?? 'Project screenshot'}`}
+                aria-haspopup="dialog"
+                onClick={(event) => openLightbox(event, item)}
+              >
+                <img
+                  src={item.src}
+                  alt={item.alt ?? ''}
+                  loading="lazy"
+                />
+              </a>
             ) : (
               <div className="outcome-card__placeholder">
                 <span>Screenshot {index + 1}</span>
@@ -149,6 +176,13 @@ function OutcomeField({ field }) {
           </figure>
         ))}
       </div>
+      {selectedIndex !== null && images.length > 0 && (
+        <Lightbox
+          images={images}
+          initialIndex={selectedIndex}
+          onClose={closeLightbox}
+        />
+      )}
     </>
   )
 }
